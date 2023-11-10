@@ -10,9 +10,11 @@ const Header = () => {
             <nav>
                 <ul>
                     <li className={styles.left}><Link to="/">Home</Link></li>
+                    <li className={styles.left}><Link to="/movies">Movies</Link></li>
+                    
                     {authenticated ? (
-                        <>
-                            <li className={styles.left}><Link to="/movies">Movies</Link></li>
+                        <>  
+                            <li className={styles.left}><Link to="/create-movie">Create Movie</Link></li>
                             <li className={styles.right}><Link to="/logout">Logout</Link></li>
                         </>
                     ) : (
