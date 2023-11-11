@@ -8,6 +8,7 @@ import Login from "./components/Login/Login"
 import Logout from "./components/Logout/Logout"
 import CreateMovie from "./components/Movie/CreateMovie/CreateMovie"
 import MovieCatalog from "./components/Movie/MovieCatalog/MovieCatalog"
+import MovieDetails from "./components/Movie/MovieDetails/MovieDetails"
 
 import { AuthProvider } from "./Contexts/AuthContext"
 
@@ -26,6 +27,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/movies" element={<MovieCatalog />} />
+            <Route path="/movies/:movieId" element={<MovieDetails />} />
             <Route path="/create-movie" element={<CreateMovie />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />

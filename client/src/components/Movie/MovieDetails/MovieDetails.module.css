@@ -1,0 +1,92 @@
+/* MovieDetails.module.css */
+
+.movieDetailsContainer {
+    display: flex;
+    align-items: flex-start;
+}
+
+.movieImage {
+    flex: 0 0 30%;
+    /* Adjust the width of the image column */
+    margin-right: 20px;
+    /* Add some spacing between image and details */
+}
+
+.movieImage img {
+    width: 100%;
+    height: auto;
+    /* Maintain aspect ratio */
+    border-radius: 8px;
+}
+
+.movieDetailsContent {
+    flex: 1;
+}
+
+.movieTitle {
+    font-size: 4rem;
+    margin-bottom: 10px;
+}
+
+.movieCategoryDirector {
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+.movieSummary {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.commentsContainer {
+    margin-top: 20px;
+}
+
+.comment {
+    margin-bottom: 10px;
+}
+
+.commentActions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.commentActions button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.commentActions button:hover {
+    background-color: #217dbb;
+}
+
+.commentForm {
+    margin-top: 20px;
+}
+
+.commentForm textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.commentForm button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.commentForm button:hover {
+    background-color: #217dbb;
+}
