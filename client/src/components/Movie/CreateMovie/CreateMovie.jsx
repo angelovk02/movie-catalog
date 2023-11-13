@@ -45,7 +45,6 @@ const CreateMovie = () => {
       
             if (response.ok) {
               const createdMovie = await response.json();
-              console.log('Movie created:', createdMovie);
 
               navigate('/movies')
             } else {
