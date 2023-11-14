@@ -4,6 +4,8 @@ import { useAuth } from '../../../Contexts/AuthContext'
 
 import EditMovieForm from '../EditMovie/EditMovie';
 
+import { updateMovie } from '../../../services/movieService';
+
 import styles from './MovieDetails.module.css'
 
 const MovieDetails = () => {
@@ -115,10 +117,14 @@ const MovieDetails = () => {
         setEditMode(false);
     };
 
-    const handleSaveEdits = (editedData) => {
-        // Assuming onSaveEdits is a function to handle saving edits
-        onSaveEdits(editedData);
-        setEditMode(false);
+    const handleSaveEdits = async (editedData) => {
+        try {
+            const updatedMovie = await updateMovie(movieId, editedData);
+            setMovie(updatedMovie)
+            setEditMode(false);
+        } catch (error) {
+            console.error('Error saving edits:', error);
+        }
     };
 
     return (
@@ -127,10 +133,7 @@ const MovieDetails = () => {
             // Display the EditMovieForm component in edit mode
             <EditMovieForm
                 initialData={movie}
-                onSave={() => {
-                    handleSaveEdits
-                    setEditMode(false)
-                }}
+                onSave={handleSaveEdits}
                 onCancel={() => {
                     setEditMode(false);
                     handleCancelEdit();

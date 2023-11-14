@@ -11,7 +11,7 @@ const MovieCatalog = () => {
 
   const fetchMovies = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/items',{
+      const response = await fetch('http://localhost:3000/api/items', {
         credentials: 'include'
       });
       if (response.ok) {
@@ -28,18 +28,22 @@ const MovieCatalog = () => {
   return (
     <div className={styles.movieCatalog}>
       <h2>Movie Catalog</h2>
-      <div className={styles.movieList}>
-        {movies.map((movie) => (
-          <MovieCard
-            key={movie._id} 
-            movieId={movie._id}
-            title={movie.title}
-            category={movie.category}
-            director={movie.director}
-            image={movie.image}
-          />
-        ))}
-      </div>
+      {movies.length === 0 ? (
+        <p>No movies available.</p>
+      ) : (
+        <div className={styles.movieList}>
+          {movies.map((movie) => (
+            <MovieCard
+              key={movie._id}
+              movieId={movie._id}
+              title={movie.title}
+              category={movie.category}
+              director={movie.director}
+              image={movie.image}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

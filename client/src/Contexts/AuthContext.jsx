@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const storedAuthStatus = localStorage.getItem('authenticated')
+        const token = document.cookie.split('; ').find(row => row.startsWith('auth-cookie='));
         if (storedAuthStatus) {
             setAuthenticated(JSON.parse(storedAuthStatus))
 

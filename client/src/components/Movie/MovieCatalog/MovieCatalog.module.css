@@ -5,10 +5,13 @@
     justify-content: space-around;
 }
 
-.movieList{
-    width: 100%; /* Ensure it takes the full width */
+.movieList {
+    width: 100%;
+    /* Ensure it takes the full width */
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around; /* Center the items horizontally */
-    margin-top: 20px; /* Add margin for spacing from the header */
-  }
+    justify-content: space-around;
+    /* Center the items horizontally */
+    margin-top: 20px;
+    /* Add margin for spacing from the header */
+}

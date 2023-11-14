@@ -1,4 +1,4 @@
-
+import { updateMovie } from '../../../services/movieService';
 
 import { useState } from 'react';
 
@@ -10,8 +10,15 @@ const EditMovieForm = ({ initialData, onSave, onCancel }) => {
         setEditedData((prevData) => ({ ...prevData, [name]: value }));
     };
 
-    const handleSave = () => {
-        onSave(editedData);
+    const handleSave = async () => {
+        try {
+
+            const updatedMovie = await updateMovie(initialData._id, editedData);
+
+            onSave(updatedMovie);
+        } catch (error) {
+            console.error('Error saving edits:', error);
+        }
     };
 
     return (

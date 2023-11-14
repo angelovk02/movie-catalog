@@ -1,3 +1,17 @@
-p{
-    font-size: 50px;
+.home {
+    display: flex;
+    flex-wrap: wrap;
+    /* Allow cards to wrap to the next row */
+    justify-content: space-around;
+}
+
+.recentMoviesList {
+    width: 100%;
+    /* Ensure it takes the full width */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    /* Center the items horizontally */
+    margin-top: 20px;
+    /* Add margin for spacing from the header */
 }
