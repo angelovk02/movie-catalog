@@ -1,17 +1,25 @@
 .movieCatalog {
     display: flex;
     flex-wrap: wrap;
-    /* Allow cards to wrap to the next row */
     justify-content: space-around;
+    font-size: 26px;
 }
+
 
 .movieList {
     width: 100%;
-    /* Ensure it takes the full width */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    /* Center the items horizontally */
-    margin-top: 20px;
-    /* Add margin for spacing from the header */
+    margin-top: 40px;
+}
+
+.noMovieCard {
+    background-color: #8B4513;
+    padding: 40px;
+    width: 500px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-size: 28px;
 }

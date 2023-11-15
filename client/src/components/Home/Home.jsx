@@ -4,7 +4,7 @@ import MovieCard from '../Movie/MovieCard/MovieCard'
 
 import { getRecentMovies } from '../../services/movieService'
 
-import styles from './Home.module.css'
+import homeStyles from './Home.module.css'
 
 const Home = () => {
     const [recentMovies, setRecentMovies] = useState([]);
@@ -16,31 +16,34 @@ const Home = () => {
     const fetchRecentMovies = async () => {
         try {
             const recentMoviesData = await getRecentMovies();
-            console.log(recentMoviesData)
             setRecentMovies(recentMoviesData);
         } catch (error) {
             console.error('Error fetching recent movies:', error);
         }
     }
-
-    return(
-        <div className={styles.home}>
-            <h2>Recently Added Movies</h2>
+    return (
+        <div className={homeStyles.home}>
             {recentMovies && recentMovies.length > 0 ? (
-                <div className={styles.recentMoviesList}>
-                    {recentMovies.map((movie) => (
-                        <MovieCard
-                            key={movie._id}
-                            movieId={movie._id}
-                            title={movie.title}
-                            category={movie.category}
-                            director={movie.director}
-                            image={movie.image}
-                        />
-                    ))}
+                <div className={homeStyles.recentMoviesContainer}>
+                    <h2>Recently Added Movies</h2>
+                    <div className={homeStyles.recentMoviesList}>
+                        {recentMovies.map((movie) => (
+                            <MovieCard
+                                key={movie._id}
+                                movieId={movie._id}
+                                title={movie.title}
+                                category={movie.category}
+                                director={movie.director}
+                                image={movie.image}
+                            />
+                        ))}
+                    </div>
                 </div>
             ) : (
-                <p>No recently added movies.</p>
+                <div className={homeStyles.noMoviesCard}>
+                    <h3>No recently added movies.</h3>
+                    <p>Check back later for updates!</p>
+                </div>
             )}
         </div>
     );

@@ -1,8 +1,11 @@
 import { useState } from "react"
 import { Link } from "react-router-dom"
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../Contexts/AuthContext";
 
+import { registerUser } from "../../services/userService";
+
+import registerStyles from './Register.module.css'
 
 const formInitialState = {
     username: '',
@@ -13,110 +16,96 @@ const formInitialState = {
 
 const Register = () => {
     const { register } = useAuth()
-    const navigate = useNavigate ();
+    const navigate = useNavigate();
 
     const [formValues, setFormValues] = useState(formInitialState)
     const [errors, setErrors] = useState({})
 
-    const changeHandler = (e) =>{
+    const changeHandler = (e) => {
         e.preventDefault()
         setFormValues(state => ({
             ...state, [e.target.name]: e.target.value
         }))
     }
 
-    const resetFormHandler = () =>{
+    const resetFormHandler = () => {
         setFormValues(formInitialState)
         setErrors({})
     }
 
-    const submitHandler = async (e) =>{
+    const submitHandler = async (e) => {
 
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:3000/api/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formValues),
-                credentials: 'include'
-            });
-    
-            if (response.ok) {
-                const userData = await response.json();
+            const userData = await registerUser(formValues);
 
-                register()
-
-                navigate('/')
-           
-            } else {
-                const errorData = await response.json();
-                setErrors({ message: errorData.message });
-                alert('Registration failed:', errorData.message);
+            if (userData) {
+                register();
+                navigate('/');
             }
         } catch (error) {
-            alert('Error during registration:', error);
+            alert("Error during register:", error);
         }
- 
+
         resetFormHandler()
     }
-    
+
     return (
-        <div className="container">
-            <h2>Register</h2>
-            <form method="POST" onSubmit={submitHandler}>
+        <div className={registerStyles.container}>
+            <div className={registerStyles.card}>
+                <h2>Register</h2>
+                <form method="POST" onSubmit={submitHandler}>
+                    <div className={registerStyles.formSection}>
+                        <label htmlFor="username">Username:</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            value={formValues.username}
+                            onChange={changeHandler}
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="username">Username:</label>
-                    <input 
-                    type="text" 
-                    id="username" 
-                    name="username" 
-                    value={formValues.username}
-                    onChange={changeHandler}
-                 
-                    />
-                </div>
+                    <div className={registerStyles.formSection}>
+                        <label htmlFor="email">Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formValues.email}
+                            onChange={changeHandler}
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="email">Email:</label>
-                    <input 
-                    type="email" 
-                    id="email" 
-                    name="email" 
-                    value={formValues.email}
-                    onChange={changeHandler}
-                    
-                    />
-                </div>
+                    <div className={registerStyles.formSection}>
+                        <label htmlFor="password">Password:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={formValues.password}
+                            onChange={changeHandler}
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="password">Password:</label>
-                    <input 
-                    type="password" 
-                    id="password" 
-                    name="password" 
-                    value={formValues.password}
-                    onChange={changeHandler}
-                    />
-                </div>
+                    <div className={registerStyles.formSection}>
+                        <label htmlFor="repeatPassword">Repeat Password:</label>
+                        <input
+                            type="password"
+                            id="repeatPassword"
+                            name="repeatPassword"
+                            value={formValues.repeatPassword}
+                            onChange={changeHandler}
+                        />
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="repeatPassword">Repeat Password:</label>
-                    <input 
-                    type="password" 
-                    id="repeatPassword" 
-                    name="repeatPassword" 
-                    value={formValues.repeatPassword}
-                    onChange={changeHandler}
-                    />
-                </div>
-
-                <button type="submit">Register</button>
-            </form>
-            <p>Already have an account? <Link to="/login">Login</Link></p>
-        </div>
-    )
+                    <button type="submit">Register</button>
+                </form>
+                <p>
+                    Already have an account? <Link to="/login">Login</Link>
+                </p>
+            </div>
+        </div >
+    );
 }
 export default Register

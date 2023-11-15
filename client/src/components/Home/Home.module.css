@@ -1,17 +1,45 @@
 .home {
     display: flex;
     flex-wrap: wrap;
-    /* Allow cards to wrap to the next row */
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
 }
 
-.recentMoviesList {
+.recentMoviesContainer {
+    padding: 0 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    /* Ensure it takes the full width */
+    text-align: center;
+    font-size: 26px;
+}
+
+/* .recentMoviesContainer {
+    width: 60%;
+} */
+
+.recentMoviesList {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    /* Center the items horizontally */
-    margin-top: 20px;
-    /* Add margin for spacing from the header */
+    margin-top: 70px;
+}
+
+.noMoviesCard {
+    background-color: #8B4513;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 50%;
+    text-align: center;
+    font-size: 26px;
+}
+
+h3 {
+    color: black;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #fff;
 }

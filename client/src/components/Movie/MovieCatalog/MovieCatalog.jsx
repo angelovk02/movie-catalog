@@ -1,37 +1,42 @@
 import { useState, useEffect } from 'react';
 import MovieCard from '../MovieCard/MovieCard';
-import styles from './MovieCatalog.module.css'
+import movieCatalogStyles from './MovieCatalog.module.css'
+
+import { fetchMovies } from '../../../services/movieService';
 
 const MovieCatalog = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    fetchMovies();
+    fetchMoviesData();
   }, []);
 
-  const fetchMovies = async () => {
+  const fetchMoviesData = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/items', {
-        credentials: 'include'
-      });
-      if (response.ok) {
-        const moviesData = await response.json();
-        setMovies(moviesData);
-      } else {
-        console.error('Failed to fetch movies:', response.statusText);
-      }
+      const moviesData = await fetchMovies();
+      setMovies(moviesData);
     } catch (error) {
-      console.error('Error during movie fetch:', error);
+      console.error('Error fetching movies:', error);
     }
   };
 
+  const NoMoviesCard = () => (
+    <div className={movieCatalogStyles.noMovieCard}>
+      <h3>No movies available</h3>
+    </div>
+  );
+
   return (
-    <div className={styles.movieCatalog}>
+    <div className={movieCatalogStyles.movieCatalog}>
+
       <h2>Movie Catalog</h2>
       {movies.length === 0 ? (
-        <p>No movies available.</p>
+        <div className={movieCatalogStyles.movieList}>
+
+          <NoMoviesCard />
+        </div>
       ) : (
-        <div className={styles.movieList}>
+        <div className={movieCatalogStyles.movieList}>
           {movies.map((movie) => (
             <MovieCard
               key={movie._id}

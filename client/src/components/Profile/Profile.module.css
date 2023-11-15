@@ -1,0 +1,45 @@
+.profileContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.profileCard {
+    background-color: #8B4513;
+    padding: 60px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    max-width: 600px;
+    width: 100%;
+}
+
+.profileImage {
+    margin-bottom: 30px;
+}
+
+.profileInfo {
+    color: black;
+    text-align: center;
+    font-size: 36px;
+}
+
+
+
+.editButton {
+    background-color: #333;
+    color: white;
+    padding: 30px 40px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 40px;
+    font-size: 26px;
+
+}
+
+.editButton:hover {
+    color: #ff9900;
+}

@@ -9,10 +9,11 @@ import Logout from "./components/Logout/Logout"
 import CreateMovie from "./components/Movie/CreateMovie/CreateMovie"
 import MovieCatalog from "./components/Movie/MovieCatalog/MovieCatalog"
 import MovieDetails from "./components/Movie/MovieDetails/MovieDetails"
+import Profile from './components/Profile/Profile'
 
 import { AuthProvider } from "./Contexts/AuthContext"
 
-import styles from "./App.module.css"
+import appStyles from "./App.module.css"
 
 function App() {
 
@@ -20,13 +21,14 @@ function App() {
   return (
 
     <AuthProvider>
-      <div className={styles.container}>
+      <div className={appStyles.container}>
         <Header />
 
-        <div className={styles.content}>
+        <div className={appStyles.content}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/movies" element={<MovieCatalog />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/movies/:movieId" element={<MovieDetails />} />
             <Route path="/create-movie" element={<CreateMovie />} />
             <Route path="/register" element={<Register />} />

@@ -40,6 +40,7 @@
 
 .comment {
     margin-bottom: 10px;
+    font-size: 26px;
 }
 
 .commentActions {
@@ -48,9 +49,9 @@
 }
 
 .commentActions button {
-    background-color: #3498db;
+    background-color: #333;
     color: #fff;
-    padding: 8px 12px;
+    padding: 4px 8px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -58,11 +59,12 @@
 }
 
 .commentActions button:hover {
-    background-color: #217dbb;
+    color: #ff9900;
 }
 
 .commentForm {
     margin-top: 20px;
+    width: 40%
 }
 
 .commentForm textarea {
@@ -74,7 +76,7 @@
 }
 
 .commentForm button {
-    background-color: #3498db;
+    background-color: #333;
     color: #fff;
     padding: 8px 12px;
     border: none;
@@ -84,5 +86,5 @@
 }
 
 .commentForm button:hover {
-    background-color: #217dbb;
+    color: #ff9900;
 }

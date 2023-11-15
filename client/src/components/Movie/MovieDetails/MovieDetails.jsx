@@ -4,44 +4,31 @@ import { useAuth } from '../../../Contexts/AuthContext'
 
 import EditMovieForm from '../EditMovie/EditMovie';
 
-import { updateMovie } from '../../../services/movieService';
-
-import styles from './MovieDetails.module.css'
+import { updateMovie, deleteMovie, fetchMovieById } from '../../../services/movieService';
+import { addComment,deleteComment } from '../../../services/commentService';
+import movieDetailsStyles from './MovieDetails.module.css'
 
 const MovieDetails = () => {
-    const { movieId } = useParams()
+    const { movieId } = useParams();
     const navigate = useNavigate();
-
-    const { authenticated, user } = useAuth()
-
-
-
+    const { authenticated, user } = useAuth();
     const [movie, setMovie] = useState(null);
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
     const [editMode, setEditMode] = useState(false);
 
     useEffect(() => {
-        const fetchMovieById = async () => {
-            try {
-                const response = await fetch(`http://localhost:3000/api/items/${movieId}`, {
-                    credentials: 'include'
-                })
-                if (response.ok) {
-                    const movieData = await response.json();
-                    setMovie(movieData);
+        const fetchMovieData = async () => {
 
-                    // Assuming comments are an array in the movie data
-                    setComments(movieData.comments || []);
-                } else {
-                    console.error('Failed to fetch movie:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error during movie fetch:', error);
+            const movieData = await fetchMovieById(movieId);
+
+            if (movieData) {
+                setMovie(movieData);
+                setComments(movieData.comments || []);
             }
         };
 
-        fetchMovieById();
+        fetchMovieData();
     }, [movieId]);
 
     const handleCommentChange = (e) => {
@@ -49,63 +36,35 @@ const MovieDetails = () => {
     };
 
     const handleAddComment = async () => {
+        const newComment = await addComment(movieId, comment);
 
-        try {
-            const response = await fetch(`http://localhost:3000/api/items/${movieId}/addComment`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ text: comment }),
-                credentials: 'include',
-            });
-
-            if (response.ok) {
-                const newComment = await response.json();
-                setComments([...comments, newComment]);
-                setComment('');
-            } else {
-                console.error('Failed to add comment:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error during comment addition:', error);
+        if (newComment) {
+            setComments([...comments, newComment]);
+            setComment('');
+        } else {
+            console.error('Failed to add comment');
         }
     };
 
     const handleDeleteComment = async (commentId) => {
-        try {
-            const response = await fetch(`http://localhost:3000/api/items/${movieId}/comments/${commentId}`, {
-                method: 'DELETE',
-                credentials: 'include',
-            });
+        const isDeleted = await deleteComment(movieId, commentId);
 
-            if (response.ok) {
-                // Update the comments state to reflect the deletion
-                const updatedComments = comments.filter((comment) => comment._id !== commentId);
-                setComments(updatedComments);
-            } else {
-                console.error('Failed to delete comment:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error during comment deletion:', error);
+        if (isDeleted) {
+            const updatedComments = comments.filter((comment) => comment._id !== commentId);
+            setComments(updatedComments);
+        } else {
+            console.error('Failed to delete comment');
         }
     };
 
-
     const handleDeleteMovie = async () => {
-        try {
-            const response = await fetch(`http://localhost:3000/api/items/${movieId}`, {
-                method: 'DELETE',
-                credentials: 'include',
-            });
 
-            if (response.ok) {
-                navigate('/movies')
-            } else {
-                console.error('Failed to delete movie:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error during movie deletion:', error);
+        const isDeleted = await deleteMovie(movieId)
+
+        if (isDeleted) {
+            navigate('/movies');
+        } else {
+            console.error('Failed to delete movie')
         }
     };
 
@@ -120,7 +79,7 @@ const MovieDetails = () => {
     const handleSaveEdits = async (editedData) => {
         try {
             const updatedMovie = await updateMovie(movieId, editedData);
-            setMovie(updatedMovie)
+            setMovie(updatedMovie);
             setEditMode(false);
         } catch (error) {
             console.error('Error saving edits:', error);
@@ -130,7 +89,6 @@ const MovieDetails = () => {
     return (
 
         editMode ? (
-            // Display the EditMovieForm component in edit mode
             <EditMovieForm
                 initialData={movie}
                 onSave={handleSaveEdits}
@@ -141,26 +99,26 @@ const MovieDetails = () => {
             />
         ) :
 
-            <div className={styles.movieDetailsContainer}>
+            <div className={movieDetailsStyles.movieDetailsContainer}>
                 {movie && (
                     <>
-                        <div className={styles.movieImage}>
+                        <div className={movieDetailsStyles.movieImage}>
                             <img src={movie.image} alt={`${movie.title} Poster`} />
                         </div>
-                        <div className={styles.movieDetailsContent}>
+                        <div className={movieDetailsStyles.movieDetailsContent}>
 
-                            <h2 className={styles.movieTitle}>{movie.title}</h2>
-                            <p className={styles.movieCategoryDirector}>Category: {movie.category}</p>
-                            <p className={styles.movieCategoryDirector}>Director: {movie.director}</p>
-                            <p className={styles.movieSummary}>Summary: {movie.summary}</p>
+                            <h2 className={movieDetailsStyles.movieTitle}>{movie.title}</h2>
+                            <p className={movieDetailsStyles.movieCategoryDirector}>Category: {movie.category}</p>
+                            <p className={movieDetailsStyles.movieCategoryDirector}>Director: {movie.director}</p>
+                            <p className={movieDetailsStyles.movieSummary}>Summary: {movie.summary}</p>
 
                             <h3>Comments</h3>
                             {comments.length === 0 ? (
                                 <p>No comments yet.</p>
                             ) : (
-                                <ul className={styles.commentsContainer}>
+                                <ul className={movieDetailsStyles.commentsContainer}>
                                     {comments.map((comment) => (
-                                        <li key={comment._id} className={styles.comment}>
+                                        <li key={comment._id} className={movieDetailsStyles.comment}>
                                             <strong>{comment.userId.username}</strong>: {comment.text}
                                             {authenticated && user && user.username === 'Admin00' && (
                                                 <button onClick={() => handleDeleteComment(comment._id)}>Delete</button>
@@ -172,7 +130,7 @@ const MovieDetails = () => {
 
                             {/* Comment form */}
                             {!editMode && authenticated ? (
-                                <div className={styles.commentForm}>
+                                <div className={movieDetailsStyles.commentForm}>
                                     <textarea value={comment} onChange={handleCommentChange} />
                                     <button onClick={handleAddComment}>Add Comment</button>
                                 </div>
@@ -182,7 +140,7 @@ const MovieDetails = () => {
 
                             {/* Edit and delete buttons for the movie */}
                             {authenticated && user && user.username === 'Admin00' && !editMode && (
-                                <div className={styles.commentActions}>
+                                <div className={movieDetailsStyles.commentActions}>
                                     <button onClick={handleEditMovie}>Edit Movie</button>
                                     <button onClick={handleDeleteMovie}>Delete Movie</button>
                                 </div>

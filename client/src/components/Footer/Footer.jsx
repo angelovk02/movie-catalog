@@ -1,8 +1,8 @@
-import styles from './Footer.module.css'
+import footerStyles from './Footer.module.css'
 
 const Footer = () => {
     return (
-        <footer className={styles.footer}>
+        <footer className={footerStyles.footer}>
             <p>&copy; 2023 Movie-catalog. All rights reserved.</p>
         </footer>
     );

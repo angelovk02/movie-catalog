@@ -2,6 +2,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Contexts/AuthContext";
 
+import { loginUser } from "../../services/userService";
+
+import loginStyles from './Login.module.css'
 
 const formInitialState = {
     email: '',
@@ -30,26 +33,18 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch("http://localhost:3000/api/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formValues),
-                credentials: "include",
-            });
+            const response = await loginUser(formValues);
 
             if (response.ok) {
                 const userData = await response.json();
 
-                login()
+                login();
 
-                navigate('/')
+                navigate("/");
             } else {
                 const errorData = await response.json();
                 setErrors({ message: errorData.message });
                 alert("Login failed:", errorData.message);
-
             }
         } catch (error) {
             alert("Error during login:", error);
@@ -59,37 +54,39 @@ const Login = () => {
     };
 
     return (
-        <div className="container">
-            <h2>Login</h2>
-            <form onSubmit={submitHandler}>
-                <div className="form-group">
-                    <label htmlFor="email">Email:</label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={formValues.email}
-                        onChange={changeHandler}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="password">Password:</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        value={formValues.password}
-                        onChange={changeHandler}
-                        required
-                    />
-                </div>
-                <button type="submit">Login</button>
-            </form>
-            {errors.message && <p className="error-message">{errors.message}</p>}
-            <p>
-                Don't have an account? <Link to="/register">Register</Link>
-            </p>
+        <div className={loginStyles.container} >
+            <div className={loginStyles.card}>
+                <h2>Login</h2>
+                <form onSubmit={submitHandler}>
+                    <div className={loginStyles.formSection}>
+                        <label htmlFor="email">Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value={formValues.email}
+                            onChange={changeHandler}
+                            required
+                        />
+                    </div>
+                    <div className={loginStyles.formSection}>
+                        <label htmlFor="password">Password:</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            value={formValues.password}
+                            onChange={changeHandler}
+                            required
+                        />
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+                {errors.message && <p className={loginStyles.errorMessage}>{errors.message}</p>}
+                <p>
+                    Don't have an account? <Link to="/register">Register</Link>
+                </p>
+            </div>
         </div>
     );
 };

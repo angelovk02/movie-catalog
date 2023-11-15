@@ -26,6 +26,10 @@ export const AuthProvider = ({ children }) => {
         setUser(userInfo);
     };
 
+    const refreshUserInfo = async () => {
+        await fetchUserInfo();
+    };
+
     const register = () => {
         setAuthenticated(true);
         localStorage.setItem('authenticated', JSON.stringify(true))
@@ -44,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ authenticated,user, register, login, logout }}>
+        <AuthContext.Provider value={{ authenticated,user, register, login, logout,refreshUserInfo }}>
             {children}
         </AuthContext.Provider>
     );
