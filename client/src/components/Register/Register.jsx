@@ -20,22 +20,69 @@ const Register = () => {
 
     const [formValues, setFormValues] = useState(formInitialState)
     const [errors, setErrors] = useState({})
+    const [submitting, setSubmitting] = useState(false);
+
 
     const changeHandler = (e) => {
-        e.preventDefault()
-        setFormValues(state => ({
-            ...state, [e.target.name]: e.target.value
-        }))
-    }
+        e.preventDefault();
+        setFormValues({ ...formValues, [e.target.name]: e.target.value });
+    };
+
+    const handleBlur = (e) => {
+        const { name, value } = e.target;
+        let newErrors = { ...errors };
+
+        if (name === 'username') {
+            if (!value.trim()) {
+                newErrors.username = 'Username is required';
+            } else if (value.length < 4) {
+                newErrors.username = 'Username should be at least 4 characters long';
+            } else {
+                delete newErrors.username;
+            }
+        }
+
+        if (name === 'email') {
+            if (!value.trim()) {
+                newErrors.email = 'Email is required';
+            } else if (!/\S+@\S+\.\S+/.test(value)) {
+                newErrors.email = 'Email is not valid';
+            } else {
+                delete newErrors.email;
+            }
+        }
+
+        if (name === 'password') {
+            if (!value.trim()) {
+                newErrors.password = 'Password is required';
+            } else if (value.length < 6) {
+                newErrors.password = 'Password should be at least 6 characters long';
+            } else {
+                delete newErrors.password;
+            }
+        }
+
+        if (name === 'repeatPassword') {
+            if (!value.trim()) {
+                newErrors.repeatPassword = 'Repeat Password is required';
+            } else if (value !== formValues.password) {
+                newErrors.repeatPassword = 'Passwords do not match';
+            } else {
+                delete newErrors.repeatPassword;
+            }
+        }
+
+        setErrors(newErrors);
+    };
 
     const resetFormHandler = () => {
-        setFormValues(formInitialState)
-        setErrors({})
-    }
+        setFormValues(formInitialState);
+        setErrors({});
+    };
 
     const submitHandler = async (e) => {
-
         e.preventDefault();
+
         try {
             const userData = await registerUser(formValues);
 
@@ -43,12 +90,17 @@ const Register = () => {
                 register();
                 navigate('/');
             }
+
         } catch (error) {
-            alert("Error during register:", error);
+            console.error('Error during registration:', error);
         }
 
-        resetFormHandler()
-    }
+        resetFormHandler();
+        setSubmitting(false);
+
+    };
+
+
 
     return (
         <div className={registerStyles.container}>
@@ -63,7 +115,10 @@ const Register = () => {
                             name="username"
                             value={formValues.username}
                             onChange={changeHandler}
+                            onBlur={handleBlur}
+                            required
                         />
+                        {errors.username && <p className={registerStyles.error}>{errors.username}</p>}
                     </div>
 
                     <div className={registerStyles.formSection}>
@@ -74,7 +129,11 @@ const Register = () => {
                             name="email"
                             value={formValues.email}
                             onChange={changeHandler}
+                            onBlur={handleBlur}
+
+                            required
                         />
+                        {errors.email && <p className={registerStyles.error}>{errors.email}</p>}
                     </div>
 
                     <div className={registerStyles.formSection}>
@@ -85,7 +144,11 @@ const Register = () => {
                             name="password"
                             value={formValues.password}
                             onChange={changeHandler}
+                            onBlur={handleBlur}
+
+                            required
                         />
+                        {errors.password && <p className={registerStyles.error}>{errors.password}</p>}
                     </div>
 
                     <div className={registerStyles.formSection}>
@@ -96,16 +159,22 @@ const Register = () => {
                             name="repeatPassword"
                             value={formValues.repeatPassword}
                             onChange={changeHandler}
+                            onBlur={handleBlur}
+
+                            required
                         />
+                        {errors.repeatPassword && <p className={registerStyles.error}>{errors.repeatPassword}</p>}
                     </div>
 
-                    <button type="submit">Register</button>
+                    <button type="submit" disabled={submitting}>
+                        {submitting ? 'Registering...' : 'Register'}
+                    </button>
                 </form>
                 <p>
                     Already have an account? <Link to="/login">Login</Link>
                 </p>
             </div>
-        </div >
+        </div>
     );
 }
 export default Register

@@ -22,7 +22,7 @@ function register(req, res, next) {
 
             const token = utils.jwt.createToken({ id: createdUser._id });
             if (process.env.NODE_ENV === 'production') {
-                res.cookie(authCookieName, token, { httpOnly: true, sameSite: 'none', secure: true, domain:'localhost' })
+                res.cookie(authCookieName, token, { httpOnly: true, sameSite: 'none', secure: true, domain: 'localhost' })
             } else {
                 res.cookie(authCookieName, token, { httpOnly: true })
             }
@@ -101,11 +101,43 @@ function editProfileInfo(req, res, next) {
         .then(x => { res.status(200).json(x) })
         .catch(next);
 }
+const checkExistingUsername = (req, res, next) => {
+    const { username } = req.params;
 
+    userModel.findOne({ username })
+        .then(existingUser => {
+            if (existingUser) {
+                res.status(200).json({ exists: true });
+            } else {
+                res.status(200).json({ exists: false });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ error: 'Internal Server Error' });
+        });
+};
+
+const checkExistingEmail = (req, res, next) => {
+    const { email } = req.params;
+
+    userModel.findOne({ email })
+        .then(existingUser => {
+            if (existingUser) {
+                res.status(200).json({ exists: true });
+            } else {
+                res.status(200).json({ exists: false });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ error: 'Internal Server Error' });
+        });
+};
 module.exports = {
     login,
     register,
     logout,
     getProfileInfo,
     editProfileInfo,
+    checkExistingUsername,
+    checkExistingEmail
 }

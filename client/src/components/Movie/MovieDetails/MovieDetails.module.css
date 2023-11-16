@@ -1,51 +1,39 @@
-
 .movieDetailsContainer {
     display: flex;
+    justify-content: center;
     align-items: flex-start;
-}
-
-.movieImage {
-    flex: 0 0 30%;
-    margin-right: 20px;
-}
-
-.movieImage img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
+    padding: 20px;
 }
 
 .movieDetailsContent {
     flex: 1;
+    max-width: 60%;
 }
 
-.movieTitle {
-    font-size: 4rem;
-    margin-bottom: 10px;
+.movieImage {
+    max-width: 60%;
+    display: flex;
+    justify-content: center;
+    margin-right: 20px;
 }
 
-.movieCategoryDirector {
-    font-size: 2rem;
-    margin-bottom: 15px;
-}
-
-.movieSummary {
-    font-size: 2rem;
-    margin-bottom: 20px;
+.movieImage img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
 }
 
 .commentsContainer {
     margin-top: 20px;
+    list-style: none;
+    padding: 0;
 }
 
 .comment {
-    margin-bottom: 10px;
-    font-size: 26px;
-}
-
-.commentActions {
-    display: flex;
-    justify-content: space-between;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
 }
 
 .commentActions button {
@@ -53,38 +41,11 @@
     color: #fff;
     padding: 4px 8px;
     border: none;
-    border-radius: 5px;
+    border-radius: 3px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
 }
 
 .commentActions button:hover {
-    color: #ff9900;
-}
-
-.commentForm {
-    margin-top: 20px;
-    width: 40%
-}
-
-.commentForm textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-.commentForm button {
-    background-color: #333;
-    color: #fff;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease-in-out;
-}
-
-.commentForm button:hover {
     color: #ff9900;
 }

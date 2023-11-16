@@ -32,7 +32,7 @@ export const registerUser = async (userData) => {
       return userData;
     } else {
       const errorData = await response.json();
-      console.error('Registration failed:', errorData.message);
+      alert(errorData.message);
       throw new Error('Registration failed');
     }
   } catch (error) {
@@ -93,3 +93,5 @@ export const updateUserProfile = async (userData) => {
     throw error;
   }
 };
+
+
