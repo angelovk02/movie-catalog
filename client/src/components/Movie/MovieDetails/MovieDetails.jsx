@@ -5,7 +5,7 @@ import { useAuth } from '../../../Contexts/AuthContext'
 import EditMovieForm from '../EditMovie/EditMovie';
 
 import { updateMovie, deleteMovie, fetchMovieById } from '../../../services/movieService';
-import { addComment,deleteComment } from '../../../services/commentService';
+import { addComment, deleteComment } from '../../../services/commentService';
 import movieDetailsStyles from './MovieDetails.module.css'
 
 const MovieDetails = () => {
@@ -36,6 +36,11 @@ const MovieDetails = () => {
     };
 
     const handleAddComment = async () => {
+        if (comment.trim().length === 0) {
+            alert('Empty comment');
+            return;
+        }
+
         const newComment = await addComment(movieId, comment);
 
         if (newComment) {
@@ -119,8 +124,9 @@ const MovieDetails = () => {
                                 <ul className={movieDetailsStyles.commentsContainer}>
                                     {comments.map((comment) => (
                                         <li key={comment._id} className={movieDetailsStyles.comment}>
+                                            {console.log(comment)}
                                             <strong>{comment.userId.username}</strong>: {comment.text}
-                                            {authenticated && user && user.username === 'Admin00' && (
+                                            {authenticated && (user._id === comment.userId._id || user.username === 'Admin00') && (
                                                 <button onClick={() => handleDeleteComment(comment._id)}>Delete</button>
                                             )}
                                         </li>
@@ -128,7 +134,6 @@ const MovieDetails = () => {
                                 </ul>
                             )}
 
-                            {/* Comment form */}
                             {!editMode && authenticated ? (
                                 <div className={movieDetailsStyles.commentForm}>
                                     <textarea value={comment} onChange={handleCommentChange} />
@@ -138,7 +143,6 @@ const MovieDetails = () => {
                                 !authenticated && <p>Login to leave comments</p>
                             )}
 
-                            {/* Edit and delete buttons for the movie */}
                             {authenticated && user && user.username === 'Admin00' && !editMode && (
                                 <div className={movieDetailsStyles.commentActions}>
                                     <button onClick={handleEditMovie}>Edit Movie</button>

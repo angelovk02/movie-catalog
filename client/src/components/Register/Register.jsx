@@ -42,6 +42,7 @@ const Register = () => {
             }
         }
 
+
         if (name === 'email') {
             if (!value.trim()) {
                 newErrors.email = 'Email is required';

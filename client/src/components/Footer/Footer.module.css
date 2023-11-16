@@ -1,7 +1,6 @@
 
 .footer {
     background-color: #333;
-    color: #fff;
     text-align: center;
     padding: 30px 0;
     position: absolute;
@@ -12,4 +11,5 @@
 
 footer p {
     font-size:  24px;
+    color: white;
 }

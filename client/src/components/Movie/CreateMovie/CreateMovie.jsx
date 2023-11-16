@@ -34,6 +34,20 @@ const CreateMovie = () => {
         setErrors({})
     }
 
+
+    const handleBlur = (e) => {
+        const { name, value } = e.target;
+        let newErrors = { ...errors };
+
+        if (value.trim() === '') {
+            newErrors.name = `${name} is required`;
+        } else {
+            delete newErrors.name;
+        }
+
+        setErrors(newErrors);
+    };
+
     const submitHandler = async (e) => {
         e.preventDefault();
 
@@ -63,6 +77,7 @@ const CreateMovie = () => {
                             name="title"
                             value={formValues.title}
                             onChange={changeHandler}
+                            onBlur={handleBlur}
                             required
                         />
                     </div>
@@ -74,6 +89,7 @@ const CreateMovie = () => {
                             name="category"
                             value={formValues.category}
                             onChange={changeHandler}
+                            onBlur={handleBlur}
                             required
                         />
                     </div>
@@ -85,6 +101,7 @@ const CreateMovie = () => {
                             name="director"
                             value={formValues.director}
                             onChange={changeHandler}
+                            onBlur={handleBlur}
                             required
                         />
                     </div>
@@ -96,6 +113,7 @@ const CreateMovie = () => {
                             name="image"
                             value={formValues.image}
                             onChange={changeHandler}
+                            onBlur={handleBlur}
                             required
                         />
                     </div>
@@ -106,6 +124,7 @@ const CreateMovie = () => {
                             name="summary"
                             value={formValues.summary}
                             onChange={changeHandler}
+                            onBlur={handleBlur}
                             required
                         />
                     </div>

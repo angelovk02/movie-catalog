@@ -17,6 +17,31 @@ const Login = () => {
     const { login } = useAuth()
     const navigate = useNavigate();
 
+
+    const handleBlur = (e) => {
+        const { name, value } = e.target;
+        let newErrors = { ...errors };
+
+       
+        if (name === 'email') {
+            if (!value.trim()) {
+                newErrors.email = 'Email is required';
+            } else if (!/\S+@\S+\.\S+/.test(value)) {
+                newErrors.email = 'Email is not valid';
+            } else {
+                delete newErrors.email;
+            }
+        }
+
+        if (name === 'password' && !value.trim()) {
+            newErrors.password = 'Password is required';
+        } else {
+            delete newErrors.password;
+        }
+
+        setErrors(newErrors);
+    };
+
     const changeHandler = (e) => {
         setFormValues((prevValues) => ({
             ...prevValues,
@@ -31,6 +56,11 @@ const Login = () => {
 
     const submitHandler = async (e) => {
         e.preventDefault();
+
+        if(errors.email || errors.password){
+            return alert(errors)
+        }
+
 
         try {
             const response = await loginUser(formValues);
@@ -66,8 +96,10 @@ const Login = () => {
                             name="email"
                             value={formValues.email}
                             onChange={changeHandler}
+                            onBlur={handleBlur}
                             required
                         />
+                        {errors.email && <p className={loginStyles.errorMessage}>{errors.email}</p>}
                     </div>
                     <div className={loginStyles.formSection}>
                         <label htmlFor="password">Password:</label>
@@ -77,10 +109,12 @@ const Login = () => {
                             name="password"
                             value={formValues.password}
                             onChange={changeHandler}
+                            onBlur={handleBlur}
                             required
                         />
+                        {errors.password && <p className={loginStyles.errorMessage}>{errors.password}</p>}
                     </div>
-                    <button type="submit">Login</button>
+                    <button type="submit" >Login</button>
                 </form>
                 {errors.message && <p className={loginStyles.errorMessage}>{errors.message}</p>}
                 <p>
