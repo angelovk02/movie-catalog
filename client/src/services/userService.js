@@ -8,8 +8,13 @@ export const loginUser = async (credentials) => {
       body: JSON.stringify(credentials),
       credentials: "include",
     });
+    if (response.ok) {
+      return response
+    } else {
+      const errorData = await response.json();
+      alert(errorData.message);
+    }
 
-    return response;
   } catch (error) {
     console.error("Error during login:", error);
     throw error;
@@ -94,3 +99,47 @@ export const updateUserProfile = async (userData) => {
 };
 
 
+
+export const checkExistingUsername = async (username) => {
+  try {
+    const response = await fetch('http://localhost:3000/api/users/validateUsername', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    return data.exists;
+  } catch (error) {
+    console.error('Error checking existing username:', error);
+    return false;
+  }
+};
+
+export const checkExistingEmail = async (email) => {
+  try {
+    const response = await fetch('http://localhost:3000/api/users/validateEmail', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    const data = await response.json();
+    return data.exists;
+  } catch (error) {
+    console.error('Error checking existing email:', error);
+    return false;
+  }
+};

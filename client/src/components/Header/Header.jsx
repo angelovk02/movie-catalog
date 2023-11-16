@@ -4,17 +4,21 @@ import { useAuth } from '../../Contexts/AuthContext'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
-    const { authenticated } = useAuth()
+    const { authenticated, user } = useAuth()
     return (
         <header>
             <nav>
                 <ul>
                     <li className={headerStyles.left}><Link to="/">Home</Link></li>
                     <li className={headerStyles.left}><Link to="/movies">Movies</Link></li>
-                    
+
+                    {authenticated && user && user.username === 'Admin00' && (
+                        <li className={headerStyles.left}><Link to="/create-movie">Create Movie</Link></li>
+
+                    )}
+
                     {authenticated ? (
-                        <>  
-                            <li className={headerStyles.left}><Link to="/create-movie">Create Movie</Link></li>
+                        <>
                             <li className={headerStyles.right}><Link to="/logout">Logout</Link></li>
                             <li className={headerStyles.right}><Link to="/profile">Profile</Link></li>
                         </>

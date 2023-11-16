@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { updateUserProfile } from '../../../services/userService';
+import { updateUserProfile,checkExistingEmail,checkExistingUsername } from '../../../services/userService';
 
 import editProfileStyles from './EditProfile.module.css'
 
@@ -19,7 +19,7 @@ const EditProfileForm = ({ user, onSave, onCancel }) => {
        
     };
 
-    const handleBlur = (e) => {
+    const handleBlur = async (e) => {
         const { name, value } = e.target;
         let newErrors = { ...errors };
 
@@ -30,7 +30,12 @@ const EditProfileForm = ({ user, onSave, onCancel }) => {
             } else if (value.length < 4) {
                 newErrors.username = 'Username should be at least 4 characters long';
             } else {
-                delete newErrors.username;
+                const exists = await checkExistingUsername(value)
+                if(exists){
+                    newErrors.username = 'Username is already taken'
+                }else {
+                    delete newErrors.username
+                }
             }
         }
 
@@ -40,7 +45,13 @@ const EditProfileForm = ({ user, onSave, onCancel }) => {
             } else if (!/\S+@\S+\.\S+/.test(value)) {
                 newErrors.email = 'Email is not valid';
             } else {
-                delete newErrors.email;
+                console.log(value)
+                const exists = await checkExistingEmail(value)
+                if(exists){
+                    newErrors.email = 'Email is already taken'
+                }else {
+                    delete newErrors.email
+                }
             }
         }
 

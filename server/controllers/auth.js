@@ -103,11 +103,44 @@ function editProfileInfo(req, res, next) {
 }
 
 
+const checkExistingEmail = (req, res, next) => {
+    const { email } = req.user.email;
+    userModel.findOne({ email })
+        .then(existingUser => {
+            if (existingUser) {
+                res.status(200).json({ exists: true });
+            } else {
+                res.status(200).json({ exists: false });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ error: 'Internal Server Error' });
+        });
+};
+
+const checkExistingUsername = (req, res, next) => {
+    const username = req.user.username;
+    console.log(username)
+    userModel.findOne({ username })
+        .then(existingUser => {
+            if (existingUser) {
+                res.status(200).json({ exists: true });
+            } else {
+                res.status(200).json({ exists: false });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({ error: 'Internal Server Error' });
+        });
+};
+
 module.exports = {
     login,
     register,
     logout,
     getProfileInfo,
     editProfileInfo,
+    checkExistingEmail,
+    checkExistingUsername,
 
 }

@@ -74,10 +74,10 @@ const Login = () => {
             } else {
                 const errorData = await response.json();
                 setErrors({ message: errorData.message });
-                alert("Login failed:", errorData.message);
+                console.log("Login failed:");
             }
         } catch (error) {
-            alert("Error during login:", error);
+            console.log("Error during login:", error);
         }
 
         resetFormHandler()
