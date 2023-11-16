@@ -18,11 +18,27 @@ function getRecentMovies(req, res, next) {
 }
 
 
+// const getMovieById = (req, res, next) => {
+//     const movieId = req.params.movieId
+//     movieModel.findById(movieId)
+//         .then(movie => res.json(movie))
+//         .catch(next);
+// };
+
 const getMovieById = (req, res, next) => {
-    const movieId = req.params.movieId
+    const movieId = req.params.movieId;
+
     movieModel.findById(movieId)
-        .then(movie => res.json(movie))
-        .catch(next);
+        .populate({
+            path: 'comments.userId',
+            select: 'username' // Specify the field you want to populate
+        })
+        .exec((err, movie) => {
+            if (err) {
+                return next(err);
+            }
+            res.json(movie);
+        });
 };
 
 
