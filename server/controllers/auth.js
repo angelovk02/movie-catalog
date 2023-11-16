@@ -120,6 +120,7 @@ const checkExistingEmail = (req, res, next) => {
 
 const checkExistingUsername = (req, res, next) => {
     const username = req.user.username;
+    // ne e req.user zashtoto vinagi vzima danite na user a ne ot poleto
     console.log(username)
     userModel.findOne({ username })
         .then(existingUser => {
