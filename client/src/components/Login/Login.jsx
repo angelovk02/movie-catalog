@@ -22,7 +22,7 @@ const Login = () => {
         const { name, value } = e.target;
         let newErrors = { ...errors };
 
-       
+
         if (name === 'email') {
             if (!value.trim()) {
                 newErrors.email = 'Email is required';
@@ -35,6 +35,8 @@ const Login = () => {
 
         if (name === 'password' && !value.trim()) {
             newErrors.password = 'Password is required';
+        } else if (value.length < 6) {
+            newErrors.password = 'Password should be at least 6 characters long';
         } else {
             delete newErrors.password;
         }
@@ -57,7 +59,7 @@ const Login = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
 
-        if(errors.email || errors.password){
+        if (errors.email || errors.password) {
             return alert(errors)
         }
 

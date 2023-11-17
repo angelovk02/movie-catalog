@@ -102,7 +102,7 @@ export const updateUserProfile = async (userData) => {
 
 export const checkExistingUsername = async (username) => {
   try {
-    const response = await fetch('http://localhost:3000/api/users/validateUsername', {
+    const response = await fetch(`http://localhost:3000/api/users/validateUsername/${username}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ export const checkExistingUsername = async (username) => {
 
 export const checkExistingEmail = async (email) => {
   try {
-    const response = await fetch('http://localhost:3000/api/users/validateEmail', {
+    const response = await fetch(`http://localhost:3000/api/users/validateEmail/${email}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

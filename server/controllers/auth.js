@@ -104,7 +104,8 @@ function editProfileInfo(req, res, next) {
 
 
 const checkExistingEmail = (req, res, next) => {
-    const { email } = req.user.email;
+    const { email } = req.params
+    console.log(email)
     userModel.findOne({ email })
         .then(existingUser => {
             if (existingUser) {
@@ -119,8 +120,7 @@ const checkExistingEmail = (req, res, next) => {
 };
 
 const checkExistingUsername = (req, res, next) => {
-    const username = req.user.username;
-    // ne e req.user zashtoto vinagi vzima danite na user a ne ot poleto
+    const {username} = req.params;
     console.log(username)
     userModel.findOne({ username })
         .then(existingUser => {
