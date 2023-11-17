@@ -4,6 +4,12 @@
     align-items: flex-start;
     padding: 20px;
 }
+.movieCategorySummary,
+.movieCategoryDirector,
+.movieCategoryCategory{
+    margin-bottom: 5px;
+}
+
 
 .movieDetailsContent {
     flex: 1;
@@ -11,7 +17,7 @@
 }
 
 .movieImage {
-    max-width: 60%;
+    max-width:80%;
     display: flex;
     justify-content: center;
     margin-right: 20px;
@@ -23,18 +29,35 @@
     border-radius: 8px;
 }
 
+
 .commentsContainer {
     margin-top: 20px;
     list-style: none;
     padding: 0;
 }
 
+.commentsContainer button{
+    margin-left: 15px;
+}
+
+.commentForm button {
+    background-color: #333;
+    color: #fff;
+    padding: 25px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease-in-out;
+    font-size: 20px;
+}
+
 .comment {
     margin-bottom: 15px;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid black;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 18px;
     max-width: 100%;
     word-break: break-word;
 }
@@ -47,10 +70,10 @@
     border-radius: 3px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
-    font-size: 12px;
+    font-size: 16px;
 }
 
-.comment button:hover{
+.comment button:hover {
     color: #ff9900;
 }
 
@@ -62,8 +85,21 @@
     border-radius: 3px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
+    font-size: 20;
 }
 
 .commentActions button:hover {
     color: #ff9900;
+}
+
+.pagination button {
+    padding: 6px 10px;
+    margin-top: 0px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #333;
+    cursor: pointer;
 }

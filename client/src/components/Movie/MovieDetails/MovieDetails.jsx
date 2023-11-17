@@ -16,6 +16,8 @@ const MovieDetails = () => {
     const [comment, setComment] = useState('');
     const [comments, setComments] = useState([]);
     const [editMode, setEditMode] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1)
+    const commentsPerPage = 4
 
     useEffect(() => {
         const fetchMovieData = async () => {
@@ -91,6 +93,12 @@ const MovieDetails = () => {
         }
     };
 
+    const lastCommentIndex = currentPage * commentsPerPage
+    const firstCommentIndex = lastCommentIndex - commentsPerPage
+    const currentComments = comments.slice(firstCommentIndex, lastCommentIndex)
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
     return (
 
         editMode ? (
@@ -107,24 +115,31 @@ const MovieDetails = () => {
             <div className={movieDetailsStyles.movieDetailsContainer}>
                 {movie && (
                     <>
-                        <div className={movieDetailsStyles.movieImage}>
-                            <img src={movie.image} alt={`${movie.title} Poster`} />
+                        <div className={movieDetailsStyles.movieContent}>
+                            <div className={movieDetailsStyles.movieImage}>
+                                <img src={movie.image} alt={`${movie.title} Poster`} />
+                            </div>
+                            {authenticated && user && user.username === 'Admin00' && !editMode && (
+                                <div className={movieDetailsStyles.commentActions}>
+                                    <button onClick={handleEditMovie}>Edit Movie</button>
+                                    <button onClick={handleDeleteMovie}>Delete Movie</button>
+                                </div>
+                            )}
                         </div>
                         <div className={movieDetailsStyles.movieDetailsContent}>
 
                             <h2 className={movieDetailsStyles.movieTitle}>{movie.title}</h2>
-                            <p className={movieDetailsStyles.movieCategoryDirector}>Category: {movie.category}</p>
+                            <p className={movieDetailsStyles.movieCategoryCategory}>Category: {movie.category}</p>
                             <p className={movieDetailsStyles.movieCategoryDirector}>Director: {movie.director}</p>
-                            <p className={movieDetailsStyles.movieSummary}>Summary: {movie.summary}</p>
+                            <p className={movieDetailsStyles.movieCategorySummary}>Summary: {movie.summary}</p>
 
                             <h3>Comments</h3>
                             {comments.length === 0 ? (
                                 <p>No comments yet.</p>
                             ) : (
                                 <ul className={movieDetailsStyles.commentsContainer}>
-                                    {comments.map((comment) => (
+                                    {currentComments.map((comment) => (
                                         <li key={comment._id} className={movieDetailsStyles.comment}>
-                                            {console.log(comment)}
                                             <strong>{comment.userId.username}</strong>: {comment.text}
                                             {authenticated && (user._id === comment.userId._id || user.username === 'Admin00') && (
                                                 <button onClick={() => handleDeleteComment(comment._id)}>Delete</button>
@@ -132,6 +147,16 @@ const MovieDetails = () => {
                                         </li>
                                     ))}
                                 </ul>
+                            )}
+
+                            {comments.length > commentsPerPage && (
+                                <div className={movieDetailsStyles.pagination}>
+                                    {[...Array(Math.ceil(comments.length / commentsPerPage))].map((_, index) => (
+                                        <button key={index} onClick={() => paginate(index + 1)}>
+                                            {index + 1}
+                                        </button>
+                                    ))}
+                                </div>
                             )}
 
                             {!editMode && authenticated ? (
@@ -143,16 +168,19 @@ const MovieDetails = () => {
                                 !authenticated && <p>Login to leave comments</p>
                             )}
 
-                            {authenticated && user && user.username === 'Admin00' && !editMode && (
-                                <div className={movieDetailsStyles.commentActions}>
-                                    <button onClick={handleEditMovie}>Edit Movie</button>
-                                    <button onClick={handleDeleteMovie}>Delete Movie</button>
-                                </div>
-                            )}
+
                         </div>
                     </>
                 )}
+                {/* {authenticated && user && user.username === 'Admin00' && !editMode && (
+                    <div className={movieDetailsStyles.commentActions}>
+                        <button onClick={handleEditMovie}>Edit Movie</button>
+                        <button onClick={handleDeleteMovie}>Delete Movie</button>
+                    </div>
+                )} */}
+
             </div>
+
     );
 
 };
