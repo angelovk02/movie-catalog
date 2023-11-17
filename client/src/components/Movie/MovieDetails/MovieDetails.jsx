@@ -172,13 +172,7 @@ const MovieDetails = () => {
                         </div>
                     </>
                 )}
-                {/* {authenticated && user && user.username === 'Admin00' && !editMode && (
-                    <div className={movieDetailsStyles.commentActions}>
-                        <button onClick={handleEditMovie}>Edit Movie</button>
-                        <button onClick={handleDeleteMovie}>Delete Movie</button>
-                    </div>
-                )} */}
-
+            
             </div>
 
     );
