@@ -29,7 +29,7 @@ const EditProfileForm = ({ user, onSave, onCancel }) => {
                 newErrors.username = 'Username is required';
             } else if (value.length < 4) {
                 newErrors.username = 'Username should be at least 4 characters long';
-            } else {
+            } else if (value !== user.username) {
                 const exists = await checkExistingUsername(value)
                 if(exists){
                     newErrors.username = 'Username is already taken'
@@ -44,8 +44,7 @@ const EditProfileForm = ({ user, onSave, onCancel }) => {
                 newErrors.email = 'Email is required';
             } else if (!/\S+@\S+\.\S+/.test(value)) {
                 newErrors.email = 'Email is not valid';
-            } else {
-                console.log(value)
+            } else if (value !== user.email) {
                 const exists = await checkExistingEmail(value)
                 if(exists){
                     newErrors.email = 'Email is already taken'

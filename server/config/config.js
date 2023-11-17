@@ -3,7 +3,7 @@ const env = process.env.NODE_ENV || 'development';
 const config = {
     development: {
         port: process.env.PORT || 3000,
-        dbURL: 'mongodb://127.0.0.1:27017/clothing-store',
+        dbURL: 'mongodb://127.0.0.1:27017/movie-catalog',
         origin: ['http://localhost:5555', 'http://localhost:4200']
     },
     production: {

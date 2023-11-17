@@ -85,6 +85,11 @@ const Register = () => {
         e.preventDefault();
 
         try {
+
+            if (Object.keys(errors).length > 0) {
+                setSubmitting(false);
+                return;
+            }
             const userData = await registerUser(formValues);
 
             if (userData) {

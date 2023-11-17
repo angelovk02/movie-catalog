@@ -12,7 +12,8 @@ export const loginUser = async (credentials) => {
       return response
     } else {
       const errorData = await response.json();
-      alert(errorData.message);
+      console.log(errorData)
+      // alert(errorData);
     }
 
   } catch (error) {

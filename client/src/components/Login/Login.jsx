@@ -60,11 +60,17 @@ const Login = () => {
         e.preventDefault();
 
         if (errors.email || errors.password) {
-            return alert(errors)
+            return 
         }
 
 
         try {
+
+            if (Object.keys(errors).length > 0) {
+                setSubmitting(false);
+                return;
+            }
+
             const response = await loginUser(formValues);
 
             if (response.ok) {
