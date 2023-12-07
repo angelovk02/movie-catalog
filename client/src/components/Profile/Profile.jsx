@@ -18,6 +18,8 @@ const ProfilePage = () => {
             username: user?.username || '',
             email: user?.email || '',
         });
+
+        console.log(user)
     }, [user]);
 
     const handleEditClick = () => {

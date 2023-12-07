@@ -17,7 +17,7 @@ const MovieDetails = () => {
     const [comments, setComments] = useState([]);
     const [editMode, setEditMode] = useState(false);
     const [currentPage, setCurrentPage] = useState(1)
-    const commentsPerPage = 4
+    const commentsPerPage = 3
 
     useEffect(() => {
         const fetchMovieData = async () => {

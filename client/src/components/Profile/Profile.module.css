@@ -6,24 +6,25 @@
 }
 
 .profileCard {
+    margin-top: 20px;
     background-color: #8B4513;
-    padding: 60px;
+    padding: 15px;
     border-radius: 20px;
     display: flex;
     align-items: center;
     flex-direction: column;
-    max-width: 600px;
+    max-width: 350px;
     width: 100%;
 }
 
 .profileImage {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .profileInfo {
     color: black;
     text-align: center;
-    font-size: 36px;
+    font-size: 24px;
 }
 
 
@@ -31,12 +32,12 @@
 .editButton {
     background-color: #333;
     color: white;
-    padding: 30px 40px;
+    padding: 10px 20px;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     margin-top: 40px;
-    font-size: 26px;
+    font-size: 22px;
 
 }
 

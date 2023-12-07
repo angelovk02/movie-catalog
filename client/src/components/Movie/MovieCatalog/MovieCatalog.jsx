@@ -7,7 +7,7 @@ import { fetchMovies } from '../../../services/movieService';
 const MovieCatalog = () => {
   const [movies, setMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1)
-  const moviesPerPage = 3
+  const moviesPerPage = 10
 
   useEffect(() => {
     fetchMoviesData();

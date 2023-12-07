@@ -16,6 +16,14 @@
     max-width: 60%;
 }
 
+.movieDetailsContent p {
+    font-size: 24px;
+}
+
+.movieDetailsContent p:nth-child(4){
+    margin-bottom: 20px;
+}
+
 .movieImage {
     max-width:80%;
     display: flex;
@@ -43,21 +51,21 @@
 .commentForm button {
     background-color: #333;
     color: #fff;
-    padding: 25px 30px;
+    padding: 5px 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
     transition: background-color 0.3s ease-in-out;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .comment {
-    margin-bottom: 15px;
-    padding: 10px;
+    margin-bottom: 5px;
+    padding: 5px;
     border: 1px solid black;
     border-radius: 8px;
-    font-size: 18px;
+    font-size: 16px;
     max-width: 100%;
     word-break: break-word;
 }
@@ -85,7 +93,12 @@
     border-radius: 3px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
-    font-size: 20;
+    font-size: 16px;
+    
+}
+
+.commentActions button:nth-child(2){
+    margin-left: 15px;
 }
 
 .commentActions button:hover {
