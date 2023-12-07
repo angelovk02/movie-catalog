@@ -14,6 +14,7 @@ import Profile from './components/Profile/Profile'
 import { AuthProvider } from "./Contexts/AuthContext"
 
 import appStyles from "./App.module.css"
+import AuthGuard from "./components/guards/AuthGuard"
 
 function App() {
 
@@ -28,12 +29,15 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/movies" element={<MovieCatalog />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/movies/:movieId" element={<MovieDetails />} />
-            <Route path="/create-movie" element={<CreateMovie />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
+
+            <Route element={<AuthGuard />}>
+              <Route path="/create-movie" element={<CreateMovie />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/movies/:movieId" element={<MovieDetails />} />
+            </Route>
 
           </Routes>
         </div>
