@@ -93,9 +93,9 @@ const MovieDetails = () => {
         }
     };
 
-    const lastCommentIndex = currentPage * commentsPerPage
-    const firstCommentIndex = lastCommentIndex - commentsPerPage
-    const currentComments = comments.slice(firstCommentIndex, lastCommentIndex)
+    const lastCommentIndex = Math.min(currentPage * commentsPerPage, comments.length);
+    const firstCommentIndex = Math.max(lastCommentIndex - commentsPerPage, 0);
+    const currentComments = comments.slice(firstCommentIndex, lastCommentIndex);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
@@ -172,7 +172,7 @@ const MovieDetails = () => {
                         </div>
                     </>
                 )}
-            
+
             </div>
 
     );

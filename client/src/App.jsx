@@ -32,11 +32,12 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="/movies/:movieId" element={<MovieDetails />} />
+
 
             <Route element={<AuthGuard />}>
               <Route path="/create-movie" element={<CreateMovie />} />
               <Route path="/profile" element={<Profile />} />
-              <Route path="/movies/:movieId" element={<MovieDetails />} />
             </Route>
 
           </Routes>
